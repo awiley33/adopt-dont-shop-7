@@ -4,4 +4,12 @@ class Admin::SheltersController < ApplicationController
     @shelters = Shelter.find_by_sql("SELECT * FROM shelters ORDER BY name DESC")
   end
 
+  def show
+    @shelter = Shelter.find_by_sql([<<-SQL, params[:id]])
+      SELECT name, city
+      FROM shelters
+      WHERE id = ?
+    SQL
+  end
+
 end
