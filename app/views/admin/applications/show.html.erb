@@ -1,16 +1,11 @@
 <h1>Pets applied for by <%= @application.name %></h1>
-<p>Application status: <%= @application.status %></p>
 
 <% @pet_applications.each do |pet_application| %>
-<div id="<%= pet_application.pet.name %>">
+<div id="<%= pet_application.pet.name %>" >
 <h3><%= pet_application.pet.name %></h3>
 <p>Status: <%= pet_application.status %> </p>
 <% if pet_application.status == "Pending" %>
-<p> <%= button_to "Approve Adoption of #{pet_application.pet.name}", "/admin/applications/#{@application.id}", method: :patch, params: {pet_application_id: pet_application.id, pet_id: pet_application.pet.id, status: "Approved"}  if pet_application.pet.adoptable == true %> </p>
-<% if pet_application.pet.adoptable == false %>
- <p> This pet is no longer available for adoption. </p>
-<% end %>
-<p> <%= button_to "Reject Adoption of #{pet_application.pet.name}", "/admin/applications/#{@application.id}", method: :patch, params: {pet_application_id: pet_application.id, pet_id: pet_application.pet.id, status: "Rejected"} %> </p>
+<p> <%= button_to "Approve Adoption of #{pet_application.pet.name}", "/admin/applications/#{@application.id}", method: :patch, params: {pet_application_id: pet_application.id, pet_id: pet_application.pet.id} %> </p>
 <% end %>
 </div>
 <% end %>
