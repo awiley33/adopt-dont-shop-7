@@ -66,9 +66,21 @@ RSpec.describe "the /admin/shelters index" do
 
   it "displays the shelters with pending apps in alphabetical order" do
     visit "/admin/shelters"
-    
+
     within "#pending" do
       expect("Fancy pets of Colorado").to appear_before("RGV animal shelter")
     end
+  end
+
+  it "displays the shelter names as links which route to the show page" do
+    visit "/admin/shelters"
+    
+    click_link("RGV animal shelter")
+    expect(current_path).to eq("/admin/shelters/#{@shelter_2.id}")
+
+    visit "/admin/shelters"
+
+    click_link("Aurora shelter")
+    expect(current_path).to eq("/admin/shelters/#{@shelter_1.id}")
   end
 end
