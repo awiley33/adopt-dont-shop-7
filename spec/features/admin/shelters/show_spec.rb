@@ -1,6 +1,6 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "the /admin/shelters index" do
+RSpec.describe "/admin/shelters show page" do
   before(:each) do
     @shelter_1 = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
     @shelter_2 = Shelter.create(name: "RGV animal shelter", city: "Harlingen, TX", foster_program: false, rank: 5)
@@ -49,38 +49,32 @@ RSpec.describe "the /admin/shelters index" do
     @pet_application_4 = PetApplication.create!(pet: @pet_6, application: @application_4)
   end
 
-  it "lists all the shelter names in reverse alphabetical order" do
-    visit "/admin/shelters"
-    expect(@shelter_2.name).to appear_before(@shelter_3.name)
-    expect(@shelter_3.name).to appear_before(@shelter_1.name)
-  end
-  
-  it "has a section which displays the name of every shelter which has pending applications" do
-    visit "/admin/shelters"
+  it "displays the shelter's name and full address" do
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    expect(page).to have_content("Aurora shelter")
+    expect(page).to have_content("Aurora, CO")
+    expect(page).to_not have_content("RGV animal shelter")
+    expect(page).to_not have_content("Harlingen, TX")
     
-    expect(page).to have_content("Shelters with Pending Applications")
-    expect(page).to have_content("RGV animal shelter").twice
-    expect(page).to have_content("Fancy pets of Colorado").twice
-    expect(page).to_not have_content("Aurora shelter").twice
+    visit "/admin/shelters/#{@shelter_3.id}"
+    
+    expect(page).to have_content("Fancy pets of Colorado")
+    expect(page).to have_content("Denver, CO")
+    expect(page).to_not have_content("RGV animal shelter")
+    expect(page).to_not have_content("Harlingen, TX")
   end
 
-  it "displays the shelters with pending apps in alphabetical order" do
-    visit "/admin/shelters"
-
-    within "#pending" do
-      expect("Fancy pets of Colorado").to appear_before("RGV animal shelter")
+  describe "statistics section" do
+    it "displays average age of all adoptable pets" do
+      visit "/admin/shelters/#{@shelter_1.id}"
+      expect(page).to have_content("4.0")
+      
+      visit "/admin/shelters/#{@shelter_3.id}"
+      
+      expect(page).to have_content("4.5")
+      save_and_open_page
+save_and_open_page
     end
-  end
-
-  it "displays the shelter names as links which route to the show page" do
-    visit "/admin/shelters"
-    
-    click_link("RGV animal shelter")
-    expect(current_path).to eq("/admin/shelters/#{@shelter_2.id}")
-
-    visit "/admin/shelters"
-
-    click_link("Aurora shelter")
-    expect(current_path).to eq("/admin/shelters/#{@shelter_1.id}")
   end
 end
