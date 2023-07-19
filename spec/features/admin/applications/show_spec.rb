@@ -283,4 +283,52 @@ RSpec.describe "the /admin/application show" do
       expect(page).to have_button("Reject Adoption of Clawdia")
     end
   end
+
+  it "approves a pet application and shows flash notice" do
+    visit "/admin/applications/#{@application_4.id}"
+
+    within "#Luca" do
+      click_button "Approve Adoption of Luca"
+    end
+
+    expect(page).to have_content("Pet application has been approved.")
+  end
+
+  it "rejects a pet application and shows flash notice" do
+    visit "/admin/applications/#{@application_4.id}"
+
+    within "#Luca" do
+      click_button "Reject Adoption of Luca"
+    end
+
+    expect(page).to have_content("Pet application has been rejected.")
+  end
+
+  it "approves an application and shows flash notice" do
+    visit "/admin/applications/#{@application_4.id}"
+
+    within "#Luca" do
+      click_button "Approve Adoption of Luca"
+    end
+
+    within "#Enzo" do
+      click_button "Approve Adoption of Enzo"
+    end
+
+    expect(page).to have_content("Application and all associated pets have been approved.")
+  end
+
+  it "rejects an application and shows flash notice" do
+    visit "/admin/applications/#{@application_4.id}"
+
+    within "#Luca" do
+      click_button "Reject Adoption of Luca"
+    end
+
+    within "#Enzo" do
+      click_button "Reject Adoption of Enzo"
+    end
+
+    expect(page).to have_content("Application has been rejected as not all pets are approved.")
+  end
 end
