@@ -7,10 +7,12 @@ class Admin::SheltersController < ApplicationController
 
   def show
     @shelter = Shelter.find_by_sql([<<-SQL, params[:id]])
-      SELECT name, city
+      SELECT *
       FROM shelters
       WHERE id = ?
     SQL
+
+    
   end
 
 end
