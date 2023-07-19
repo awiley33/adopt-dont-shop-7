@@ -1,18 +1,12 @@
 <% @shelters.each do |shelter| %>
-   <h3> <%= link_to shelter.name, "/admin/shelters/#{shelter.id}" %> </h3>
+    <h3> <%= link_to shelter.name, "/admin/shelters/#{shelter.id}" %> </h3>
 <% end %><br><br>
 
 <div id="pending" >
 <h3>Shelters with Pending Applications</h3>
-    <% @pending.each do |shelter| %>
-        <% shelter.pets.each do |pet| %>
-            <% pet.applications.each do |application| %>
-                <% if application.status == "Pending" %>
-                    <% application.pets.each do |pet|%>
-                    <%= pet.shelter.name %><br>
-                    <% end %>
-                <% end %>
-            <% end %>
-        <% end %>
+<% @pending.each do |shelter| %>
+    <% shelter.pets.joins(:applications).where(applications: { status: "Pending" }).each do |pet| %>
+    <%= pet.shelter.name %><br>
     <% end %>
+<% end %>
 </div>
