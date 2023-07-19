@@ -2,8 +2,9 @@
     <h3><%= shelter.name %></h3>
 <% end %><br><br>
 
+<div id="pending" >
 <h3>Shelters with Pending Applications</h3>
-    <% @shelters.each do |shelter| %>
+    <% @pending.each do |shelter| %>
         <% shelter.pets.each do |pet| %>
             <% pet.applications.each do |application| %>
                 <% if application.status == "Pending" %>
@@ -14,3 +15,4 @@
             <% end %>
         <% end %>
     <% end %>
+</div>
