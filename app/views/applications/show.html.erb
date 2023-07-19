@@ -1,10 +1,4 @@
-<h1>Application Details</h1>
-<br/>
-<h2>Name: <%= @application.name %></h2>
-<p><%= @application.street_address %> </p>
-<p><%= @application.city %>, <%= @application.state %></p>
-<p><%= @application.zip %></p>
-<p><%= @application.description %></p>
+<%= render partial: '/partials/application_show' %>
 
 <h2>Pet(s) Applied For:</h2>
 <% @application.pets.each do |pet| %>
@@ -30,10 +24,8 @@
 <% if @application.status == "In Progress" && @application.pets.any? %>
   <h2>Application Submission</h2>
   <%= form_with url: "/applications/#{@application.id}", method: :patch do |form| %>
-   <p> <%= form.label :reason, "Why would I make a good owner for these pet(s)" %> </p>
-   <p> <%= form.text_area :reason %> </p>
-   <p> <%= form.submit "Submit Application" %> </p>
+    <p> <%= form.label :reason, "Why would I make a good owner for these pet(s)" %> </p>
+    <p> <%= form.text_area :reason %> </p>
+    <p> <%= form.submit "Submit Application" %> </p>
   <% end %>
 <% end %>
-
-<p>Application Status: <%= @application.status %></p>
