@@ -8,7 +8,7 @@ class Application < ApplicationRecord
   end
 
   def all_pets_have_status?
-    pet_applications.where.not(status: "Pending").exists?
+    pet_applications.where.not(status: "Pending").count == pet_applications.count
   end
 
   def adopt_all_pets

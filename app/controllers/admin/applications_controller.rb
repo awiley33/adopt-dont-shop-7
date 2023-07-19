@@ -27,17 +27,6 @@ class Admin::ApplicationsController < ApplicationController
       flash[:notice] = "Application has been rejected as not all pets are approved."
     end
 
-    # if @application.all_pets_have_status?
-    #   @application.update(status: "Rejected") 
-    #   flash[:notice] = "Application has been rejected as not all pets are approved."
-    # end
-    
-    # if @application.all_pets_approved?
-    #   @application.update(status: "Approved")
-    #   @application.adopt_all_pets 
-    #   flash[:notice] = "Application and all associated pets have been approved."
-    # end
-
     @pet.reload
     @application.reload
     @pet_application.reload
