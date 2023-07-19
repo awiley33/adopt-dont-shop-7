@@ -13,6 +13,5 @@ class Application < ApplicationRecord
 
   def adopt_all_pets
     pets.update_all(adoptable: false)
-    pets.reload
   end
 end
