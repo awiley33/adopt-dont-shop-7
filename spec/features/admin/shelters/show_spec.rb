@@ -68,12 +68,12 @@ RSpec.describe "/admin/shelters show page" do
   describe "statistics section" do
     it "displays average age of all adoptable pets" do
       visit "/admin/shelters/#{@shelter_1.id}"
-      
-      expect(page).to have_content("2")
+      expect(page).to have_content("4.0")
       
       visit "/admin/shelters/#{@shelter_3.id}"
       
       expect(page).to have_content("4.5")
+      save_and_open_page
 save_and_open_page
     end
   end

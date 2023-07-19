@@ -21,7 +21,7 @@ class Shelter < ApplicationRecord
   end
 
   def avg_pet_age
-    (adoptable_pets.pluck(:age).sum.to_f)/(pets.count.to_f)
+    adoptable_pets.average(:age)
   end
 
   def adoptable_pets
