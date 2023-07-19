@@ -73,8 +73,6 @@ RSpec.describe "/admin/shelters show page" do
       visit "/admin/shelters/#{@shelter_3.id}"
       
       expect(page).to have_content("4.5")
-      save_and_open_page
-save_and_open_page
     end
   end
 end
