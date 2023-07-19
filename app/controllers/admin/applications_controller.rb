@@ -12,11 +12,22 @@ class Admin::ApplicationsController < ApplicationController
 
     if params[:status] == "Approved"
       @pet_application.update(status: "Approved")
+      flash[:notice] = "Pet application has been approved."
     elsif params[:status] == "Rejected"
       @pet_application.update(status: "Rejected")
+      flash[:notice] = "Pet application has been rejected."
     end
-    @application.update(status: "Rejected") if @application.all_pets_have_status?
-    @application.update(status: "Approved") && @application.adopt_all_pets if @application.all_pets_approved?
+
+    if @application.all_pets_have_status?
+      @application.update(status: "Rejected") 
+      flash[:notice] = "Application has been rejected as not all pets are approved."
+    end
+    
+    if @application.all_pets_approved?
+      @application.update(status: "Approved")
+      @application.adopt_all_pets 
+      flash[:notice] = "Application and all associated pets have been approved."
+    end
 
     @pet.reload
     @application.reload

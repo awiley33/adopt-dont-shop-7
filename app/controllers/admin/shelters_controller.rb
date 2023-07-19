@@ -11,8 +11,5 @@ class Admin::SheltersController < ApplicationController
       FROM shelters
       WHERE id = ?
     SQL
-
-    
   end
-
 end
