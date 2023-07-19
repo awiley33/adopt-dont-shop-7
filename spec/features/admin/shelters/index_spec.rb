@@ -63,4 +63,12 @@ RSpec.describe "the /admin/shelters index" do
     expect(page).to have_content("Fancy pets of Colorado").twice
     expect(page).to_not have_content("Aurora shelter").twice
   end
+
+  it "displays the shelters with pending apps in alphabetical order" do
+    visit "/admin/shelters"
+    
+    within "#pending" do
+      expect("Fancy pets of Colorado").to appear_before("RGV animal shelter")
+    end
+  end
 end
