@@ -4,17 +4,15 @@ class Application < ApplicationRecord
   has_many :pets, through: :pet_applications
 
   def all_pets_approved?
-    pet_applications.all? { |pet_application| pet_application.status == "Approved" }
+    pet_applications.where.not(status: "Approved").empty?
   end
 
   def all_pets_have_status?
-    pet_applications.all? { |pet_application| pet_application.status != "Pending" }
+    pet_applications.where.not(status: "Pending").count == pet_applications.count
   end
 
   def adopt_all_pets
-    pets.each do |pet|
-      pet.update(adoptable: false)
-      pet.reload
-    end
+    pets.update_all(adoptable: false)
+    pets.reload
   end
 end

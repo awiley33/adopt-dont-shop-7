@@ -1,5 +1,6 @@
 <h1>Pets applied for by <%= @application.name %></h1>
-<p>Application status: <%= @application.status %></p>
+<%= render partial: '/partials/application_show' %>
+
 
 <% @pet_applications.each do |pet_application| %>
 <div id="<%= pet_application.pet.name %>">
